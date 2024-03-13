@@ -1,6 +1,21 @@
-﻿namespace Arcade;
+﻿using App;
+using UserInterFaceNamespace;
 
-public class DiceGame
-{
+namespace  pigDiceNameSpace {
+
+    public class DiceGame : IUserInterface
+    {
+        public void WelcomePlayer()
+        {   
+            Console.WriteLine($"Welcome to Pig Dice Game ");
+        }
+        public void startGame()
+        {
+            throw new NotImplementedException();
+        }
+
+    }
 
 }
+    
+
