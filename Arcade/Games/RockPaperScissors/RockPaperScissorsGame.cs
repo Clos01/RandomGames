@@ -18,7 +18,11 @@ namespace RockPaperScissorNameSpace
              string userChoice = Console.ReadLine().ToLower();
             Choices(userChoice, getComputerChoice());
             OutComeWinner(userChoice,getComputerChoice());
-            
+            //ask to play again
+            Console.WriteLine("Would you like to play again");
+            string inputToPlayAgain = Console.ReadLine().ToLower();
+            AskToPlayAgain(inputToPlayAgain);
+
 
         }
         public string getComputerChoice() //This method encapsulates the logic for determining the computer's choice, making it a pure function that's easy to test.
@@ -56,7 +60,16 @@ namespace RockPaperScissorNameSpace
     Console.WriteLine(Choices(userChoice, computerChoice));
         }
 
+            public void AskToPlayAgain(string inputToPlayAgain){
+                if(inputToPlayAgain == "yes"){
+                    startGame();
+                } else {
+                   Console.WriteLine( "hope you had fun!");
+                }
 
+
+
+            }
 
     }
 
