@@ -3,6 +3,7 @@
 
 using System.Security.Cryptography.X509Certificates;
 using AgeNameSpace;
+using RockPaperScissorNameSpace;
 
 namespace App
 {
@@ -30,6 +31,10 @@ namespace App
                 {
                     Console.WriteLine("Sorry, you are not old enough to enter the Arcade.");
                 }
+
+                RockPaperScissorsGame playRPC = new RockPaperScissorsGame();
+                playRPC.WelcomePlayer();
+                playRPC.startGame();
 
 
             }

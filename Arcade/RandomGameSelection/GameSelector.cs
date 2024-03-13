@@ -1,5 +1,4 @@
-﻿namespace Arcade;
-
+﻿using Arcade;
 public class GameSelector
 {
 

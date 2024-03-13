@@ -1,6 +1,11 @@
-﻿namespace Arcade;
+﻿namespace UserInterFaceNamespace{
 
-public class IGame
-{
 
+public interface IUserInterface{
+void WelcomePlayer();
+ void startGame();
+
+
+}
+    
 }
