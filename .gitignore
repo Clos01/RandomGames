@@ -1,0 +1,15 @@
+# This is a .gitignore file
+
+# Ignore all .env files
+.env
+
+# Ignore specific files that may contain sensitive information
+secret-config.json
+
+# Ignore the bin and obj directories
+bin/
+obj/
+
+# Ignore other directories and files that are generated during the build process or at runtime
+*.user
+*.suo
