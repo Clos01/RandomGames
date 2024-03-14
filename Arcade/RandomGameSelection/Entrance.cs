@@ -1,20 +1,18 @@
-﻿using Arcade;
-using AgeNameSpace;
-using RockPaperScissorNameSpace;
+﻿using AgeNameSpace;
 //this will be to call the different game collections as randomly
 
 namespace EntranceOfApp
 {
-    public class GameSelector
+    public class Entrance
     {
         AgeVerifier checkForLegalAge = new AgeVerifier();
 
         private string userName;
-        public GameSelector(string name)
+        public Entrance(string name)
         {
             userName = name;
         }
-        public void test()
+        public void checkingForLegalAgeForEntrance()
         {
             Console.WriteLine($"Whats up {userName}, let me see your ID. (Type in Age.)");
 

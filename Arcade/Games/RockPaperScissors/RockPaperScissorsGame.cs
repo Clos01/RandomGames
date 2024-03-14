@@ -13,7 +13,7 @@ namespace RockPaperScissorNameSpace
         //greet player
         public void WelcomePlayer()
         {
-            Console.WriteLine($"{userName}, This game is RockPaperScissors\nHow to play?????\t(Type your response in the console.) \n\t-Rock Beats Scissors\t-Paper Beats Rock\t-Scissors beats Paper\n\t-if you have the same as the computer you have tied");
+            Console.WriteLine($"{userName}, This game is RockPaperScissors\nHow to play????? (Type your response in the console.) \n\t-Rock Beats Scissors\t-Paper Beats Rock\t-Scissors beats Paper\n\t-if you have the same as the computer you have tied");
         }
         //will run the game logic 
         public void startGame()
