@@ -19,7 +19,7 @@ namespace  AgeNameSpace
         private const int LegalAge = 21;
         public bool VerifyOfLegalAge(int isOfAge)
         {
-            return isOfAge >= 21;
+            return isOfAge >= LegalAge;
 
 
         }

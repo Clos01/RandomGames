@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Security;
+using System.Transactions;
 using App;
 using UserInterFaceNamespace;
 
@@ -9,9 +10,13 @@ namespace pigDiceNameSpace
     public class DiceGame : IUserInterface
     {
         //* Fields //*
-        private string userName;
-        private int userTotalScore = 0;
-        private int userTurnScore = 0;
+        private readonly string userName;
+        private int userTurn;  
+        private int userTotalScore;
+        private int userTurnScore;
+
+            
+        private readonly List<int> Die = new() { 1, 2, 3, 4, 5, 6 }; 
         Random random = new Random();
 
         //* Constructor //*
@@ -19,7 +24,7 @@ namespace pigDiceNameSpace
         {
             userName = name;
         }
-        //! Greetings / Start Game //*
+
         public void WelcomePlayer()
         {
             Console.WriteLine($"Welcome {userName}, to Pig Dice Game ");
@@ -35,18 +40,18 @@ namespace pigDiceNameSpace
         public void RollOfDice()
         {
             Console.WriteLine("Lets Roll the Dice. You will Roll First,  Press Number `1` to roll");
-            click1ToRollDice();
+            RollDice();
 
         }
-        public void click1ToRollDice()
+        public void RollDice() 
         {
             // string numStr = Console.ReadLine();
 
-            if (int.TryParse(Console.ReadLine(), out int usrPressed1))
+            if (int.TryParse(Console.ReadLine(), out int btnSelected))
             {
                 // userClicked1();
-                bool userWantsRoll = userClicked1(usrPressed1);
-                if (userWantsRoll)
+                if (  btnSelected == 1)
+
                 {
                     WaitTime();
                 }
@@ -57,68 +62,54 @@ namespace pigDiceNameSpace
                 Console.WriteLine("Guess you don't want to play");
             }
         }
-        public bool userClicked1(int usrPressed1)
-        {
-            return usrPressed1 == 1;
-
-        }
+     
         public void WaitTime()
         {
             {
-                Console.WriteLine("Waiting for 5 seconds...");
+                Console.Write("Rolling Dice");
 
                 DateTime startTime = DateTime.Now;
-                TimeSpan duration = TimeSpan.FromSeconds(5);
+                TimeSpan duration = TimeSpan.FromSeconds(2);
 
                 while (DateTime.Now - startTime < duration)
                 {
                     Console.Write(".");
-                    Thread.Sleep(1000); // Sleep for 1 second
+                    Thread.Sleep(300); // Sleep for 1 second
                 }
 
-                Console.WriteLine("\n5 seconds have passed.");
+                Console.WriteLine("\nDice has been rolled. ");
             }
         }
 
-
-        public int DiceNumbers()
+        public int getNumberRolled()
         {
-            List<int> DiceNumbers = new List<int> { 1, 2, 3, 4, 5, 6 };
-            return DiceNumbers[random.Next(DiceNumbers.Count)];
-
+       return Die[random.Next(Die.Count)]; 
         }
 
 
-        public int UserDiceRoll()
+        public int userTurnTracker()
         {
-            return DiceNumbers();
-        }
-
-
-        public void userTurnCounter()
-        {
-            int userTurn = 0;
-            for (int i = 0; userTurn < i; userTurn++)
-            {
-                Console.WriteLine($"Number of Your Turn: {userTurn} ");
-            }
+            return userTurn++;  
         }
         public void playerTurn()
         {
 
             while (userTotalScore < 100)
-            {
+            {  
 
-                int rollResult = UserDiceRoll();
+                int rollResult = getNumberRolled();
                 if (rollResult == 1)
                 {
-                    Console.WriteLine("Sorry no points this time.");
                     userTurnScore = 0;
+                     int userCurrentTurn = userTurnTracker();
+                     Console.WriteLine($"you have rolled: { rollResult }, your current turn is: {userCurrentTurn},  your total for this round is { userTurnScore }");
+                     // should call bot method here 
                 }
                 else
                 {
-                    userTurnScore += rollResult;
-                    Console.WriteLine($" your current turn total is: {userTurnScore}, Do you want to roll again?");
+                 userTurnScore += rollResult;
+                 int userCurrentTurn = userTurnTracker();
+                    Console.WriteLine($"you have rolled: { rollResult } your current turn is: {userCurrentTurn} total is: {userTurnScore}, Do you want to roll again?");
                     askUserToToRollAgain();
                 }
             }
@@ -136,10 +127,7 @@ namespace pigDiceNameSpace
                 Console.WriteLine($"Your total score is now: {userTotalScore}");
 
             }
-            else
-            {
-                Console.WriteLine($" Computer will now roll for BOT. ");
-            }
+           
         }
 
     }
