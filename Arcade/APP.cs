@@ -5,8 +5,11 @@ using System.Security.Cryptography.X509Certificates;
 using AgeNameSpace;
 using RockPaperScissorNameSpace;
 using EntranceOfApp;
- using pigDiceNameSpace;
+using pigDiceNameSpace;
+using EntranceOfApp;
 using UserInterFaceNamespace;
+using PlayerNameSpace; 
+using BotPlayerNameSpace; 
 namespace App
 {
 
@@ -18,9 +21,12 @@ namespace App
             //intro
             Console.WriteLine("Hello, What is your name?");
             string name = Console.ReadLine();
-        IUserInterface diceGame = new DiceGame(name);
-        diceGame.WelcomePlayer();
-        diceGame.startGame();
+            Entrance entranceToBeLetIn = new(name);
+            entranceToBeLetIn.checkingForLegalAgeForEntrance();
+            IUserInterface diceGame = new DiceGame(name);
+            diceGame.WelcomePlayer();
+            diceGame.startGame();
+            
 
         }
 

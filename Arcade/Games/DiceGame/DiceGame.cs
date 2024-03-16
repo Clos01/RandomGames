@@ -1,8 +1,11 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Transactions;
 using App;
 using UserInterFaceNamespace;
+using BotPlayerNameSpace;
+using PlayerNameSpace;
 
 namespace pigDiceNameSpace
 {
@@ -11,18 +14,27 @@ namespace pigDiceNameSpace
     {
         //* Fields //*
         private readonly string userName;
-        private int userTurn;  
-        private int userTotalScore;
-        private int userTurnScore;
 
-            
-        private readonly List<int> Die = new() { 1, 2, 3, 4, 5, 6 }; 
+        private readonly List<int> Die = new() { 1, 2, 3, 4, 5, 6 };
         Random random = new Random();
+        // BotPlayer botPlayer = new();
+        private Player _player; //Player Class
+        private BotPlayer _bot;  //Bot Class
+        private string name;
+
 
         //* Constructor //*
         public DiceGame(string name)
         {
             userName = name;
+            
+        }
+
+        public DiceGame(string name,Player player, BotPlayer bot)
+        {
+            this.name = name;
+              this._player = player;
+            this._bot = bot;
         }
 
         public void WelcomePlayer()
@@ -32,7 +44,6 @@ namespace pigDiceNameSpace
         public void startGame()
         {
             RollOfDice();
-            playerTurn();
 
         }
 
@@ -43,14 +54,13 @@ namespace pigDiceNameSpace
             RollDice();
 
         }
-        public void RollDice() 
+        public void RollDice()
         {
-            // string numStr = Console.ReadLine();
 
             if (int.TryParse(Console.ReadLine(), out int btnSelected))
             {
                 // userClicked1();
-                if (  btnSelected == 1)
+                if (btnSelected == 1)
 
                 {
                     WaitTime();
@@ -62,7 +72,7 @@ namespace pigDiceNameSpace
                 Console.WriteLine("Guess you don't want to play");
             }
         }
-     
+
         public void WaitTime()
         {
             {
@@ -83,52 +93,22 @@ namespace pigDiceNameSpace
 
         public int getNumberRolled()
         {
-       return Die[random.Next(Die.Count)]; 
+            return Die[random.Next(Die.Count)];
         }
 
-
-        public int userTurnTracker()
-        {
-            return userTurn++;  
-        }
         public void playerTurn()
         {
+            _player.playerTurn();
 
-            while (userTotalScore < 100)
-            {  
-
-                int rollResult = getNumberRolled();
-                if (rollResult == 1)
-                {
-                    userTurnScore = 0;
-                     int userCurrentTurn = userTurnTracker();
-                     Console.WriteLine($"you have rolled: { rollResult }, your current turn is: {userCurrentTurn},  your total for this round is { userTurnScore }");
-                     // should call bot method here 
-                }
-                else
-                {
-                 userTurnScore += rollResult;
-                 int userCurrentTurn = userTurnTracker();
-                    Console.WriteLine($"you have rolled: { rollResult } your current turn is: {userCurrentTurn} total is: {userTurnScore}, Do you want to roll again?");
-                    askUserToToRollAgain();
-                }
-            }
         }
 
-
-
-        public void askUserToToRollAgain()
+        public void botTurn()
         {
-            string userInputToRollAgain = Console.ReadLine().ToLower();
-            if (userInputToRollAgain != "yes")
-            {
-                userTotalScore += userTurnScore;
-                userTurnScore = 0;
-                Console.WriteLine($"Your total score is now: {userTotalScore}");
-
-            }
-           
+            _bot.botTurn();
         }
+
+
+
 
     }
 }
