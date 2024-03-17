@@ -4,7 +4,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Transactions;
 using App;
 using UserInterFaceNamespace;
-using BotPlayerNameSpace;
 using PlayerNameSpace;
 
 namespace pigDiceNameSpace
@@ -13,38 +12,38 @@ namespace pigDiceNameSpace
     public class DiceGame : IUserInterface
     {
         //* Fields //*
-        private readonly string userName;
 
         private readonly List<int> Die = new() { 1, 2, 3, 4, 5, 6 };
         Random random = new Random();
-        // BotPlayer botPlayer = new();
-        private Player _player; //Player Class
-        private BotPlayer _bot;  //Bot Class
-        private string name;
-
-
+        //! instances of classes 
+         private readonly Player _player;
+        //* variable name from interface
+        private string Username;
         //* Constructor //*
-        public DiceGame(string name)
-        {
-            userName = name;
-            
-        }
+      
 
-        public DiceGame(string name,Player player, BotPlayer bot)
+         public DiceGame(string name)
         {
-            this.name = name;
-              this._player = player;
-            this._bot = bot;
+            this.Username = name;
+            _player = new Player(this);
         }
 
         public void WelcomePlayer()
         {
-            Console.WriteLine($"Welcome {userName}, to Pig Dice Game ");
+            Console.WriteLine($"Welcome {Username}, to Pig Dice Game ");
         }
         public void startGame()
         {
             RollOfDice();
+            
+            // _player.playerTurn();         
 
+        }
+
+        //Rolling dice
+        public int getNumberRolled()
+        {
+            return Die[random.Next(Die.Count)];
         }
 
         //* General information for roll dice  //*
@@ -64,8 +63,9 @@ namespace pigDiceNameSpace
 
                 {
                     WaitTime();
+                    // call method here 
+                     _player.playerTurn();
                 }
-
             }
             else
             {
@@ -90,26 +90,6 @@ namespace pigDiceNameSpace
                 Console.WriteLine("\nDice has been rolled. ");
             }
         }
-
-        public int getNumberRolled()
-        {
-            return Die[random.Next(Die.Count)];
-        }
-
-        public void playerTurn()
-        {
-            _player.playerTurn();
-
-        }
-
-        public void botTurn()
-        {
-            _bot.botTurn();
-        }
-
-
-
-
     }
 }
 

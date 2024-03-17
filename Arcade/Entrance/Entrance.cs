@@ -28,13 +28,8 @@ namespace EntranceOfApp
                     Console.WriteLine("Sorry, you are not old enough to enter the Arcade.");
                 }
             }
-
-        
         }
     }
-
-
-
 }
 
 

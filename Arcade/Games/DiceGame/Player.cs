@@ -10,15 +10,19 @@ namespace PlayerNameSpace
     public class Player
     { 
         //! Fields
-        private DiceGame _diceGame;
+    
+      
         private int userTurn;
         private int userTotalScore;
         private int userTurnScore;
+
+          private DiceGame _diceGame;
         //! Constructor 
-        public Player(DiceGame diceGame)
+     public Player(DiceGame diceGame)
         {
-            this._diceGame = diceGame;
+            _diceGame = diceGame;
         }
+
         public int userTurnTracker()
         {
             return userTurn++;
@@ -63,6 +67,7 @@ namespace PlayerNameSpace
             else
             {
                 // PlayerDiceGame.botTurn();
+
 
             }
         }

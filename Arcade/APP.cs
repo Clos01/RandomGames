@@ -9,7 +9,6 @@ using pigDiceNameSpace;
 using EntranceOfApp;
 using UserInterFaceNamespace;
 using PlayerNameSpace; 
-using BotPlayerNameSpace; 
 namespace App
 {
 
@@ -21,6 +20,7 @@ namespace App
             //intro
             Console.WriteLine("Hello, What is your name?");
             string name = Console.ReadLine();
+            //makes sure that you are of legal 
             Entrance entranceToBeLetIn = new(name);
             entranceToBeLetIn.checkingForLegalAgeForEntrance();
             IUserInterface diceGame = new DiceGame(name);
