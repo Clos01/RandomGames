@@ -12,17 +12,17 @@ namespace pigDiceNameSpace
     public class DiceGame : IUserInterface
     {
         //* Fields //*
-
+        private int totalScoreToWin = 100;
         private readonly List<int> Die = new() { 1, 2, 3, 4, 5, 6 };
         Random random = new Random();
         //! instances of classes 
-         private readonly Player _player;
+        private readonly Player _player;
         //* variable name from interface
         private string Username;
         //* Constructor //*
-      
 
-         public DiceGame(string name)
+
+        public DiceGame(string name)
         {
             this.Username = name;
             _player = new Player(this);
@@ -35,12 +35,12 @@ namespace pigDiceNameSpace
         public void startGame()
         {
             RollOfDice();
-            
+
             // _player.playerTurn();         
 
         }
 
-        //Rolling dice
+        //*Rolling dice
         public int getNumberRolled()
         {
             return Die[random.Next(Die.Count)];
@@ -63,8 +63,9 @@ namespace pigDiceNameSpace
 
                 {
                     WaitTime();
-                    // call method here 
-                     _player.playerTurn();
+                    // call method here for player to run the dice 
+                    //  _player.playerTurn();
+                    TakeTurn();
                 }
             }
             else
@@ -90,6 +91,39 @@ namespace pigDiceNameSpace
                 Console.WriteLine("\nDice has been rolled. ");
             }
         }
+        //should be abel to take the winner 
+        private int TakeTurn()
+        {
+
+            bool rolling = true;
+
+            while (rolling)
+            {
+                Console.WriteLine("Would you like to Roll or Hold [r/h]: ");
+                string choice = Console.ReadLine().ToLower();
+                if (choice == "h")
+                {
+                    break;
+                }
+                int rollResult = getNumberRolled();
+                Console.WriteLine($"You rolled: {rollResult}");
+                if (rollResult == 1)
+                {
+                    return 0; // Score nothing for this turn
+                }
+            }
+            return _player.userTurnTracker();
+
+
+        }
+
+
+
+
+
+
+
+
     }
 }
 
