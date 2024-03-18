@@ -16,13 +16,13 @@ namespace pigDiceNameSpace
         private readonly List<int> Die = new() { 1, 2, 3, 4, 5, 6 };
         Random random = new Random();
         //! instances of classes 
-         private readonly Player _player;
+        private readonly Player _player;
         //* variable name from interface
         private string Username;
         //* Constructor //*
-      
 
-         public DiceGame(string name)
+
+        public DiceGame(string name)
         {
             this.Username = name;
             _player = new Player(this);
@@ -34,14 +34,21 @@ namespace pigDiceNameSpace
         }
         public void startGame()
         {
-            RollOfDice();
-            
-            // _player.playerTurn();         
-
+            Console.WriteLine("Press Number `1` to roll the dice.");
+            var input = Console.ReadLine();
+            if (int.TryParse(input, out int selectedNumber) && selectedNumber == 1)
+            {
+                RollDice();
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Exiting the game.");
+                // Handle invalid input or exit the game
+            }
         }
 
         //Rolling dice
-        public int getNumberRolled()
+        public int GetNumberRolled()
         {
             return Die[random.Next(Die.Count)];
         }
@@ -55,22 +62,10 @@ namespace pigDiceNameSpace
         }
         public void RollDice()
         {
-
-            if (int.TryParse(Console.ReadLine(), out int btnSelected))
-            {
-                // userClicked1();
-                if (btnSelected == 1)
-
-                {
-                    WaitTime();
-                    // call method here 
-                     _player.playerTurn();
-                }
-            }
-            else
-            {
-                Console.WriteLine("Guess you don't want to play");
-            }
+            WaitTime(); // Simulate dice rolling
+            int diceResult = GetNumberRolled();
+            Console.WriteLine($"\nDice has been rolled: {diceResult}");
+            _player.PlayerTurn(diceResult); // Pass the dice result to the player
         }
 
         public void WaitTime()

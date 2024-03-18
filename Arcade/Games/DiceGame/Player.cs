@@ -1,81 +1,68 @@
 
-
-
 using pigDiceNameSpace;
 
 namespace PlayerNameSpace
 {
-
-
     public class Player
-    { 
-        //! Fields
-    
-      
-        private int userTurn;
+    {
+        private int userTurn = 1;
         private int userTotalScore;
         private int userTurnScore;
+        private readonly DiceGame _diceGame;
 
-          private DiceGame _diceGame;
-        //! Constructor 
-     public Player(DiceGame diceGame)
+        public Player(DiceGame diceGame)
         {
             _diceGame = diceGame;
         }
 
-        public int userTurnTracker()
+        public int UserTurnTracker()
         {
             return userTurn++;
         }
 
-        //player 
-        public void playerTurn()
+        public void PlayerTurn(int diceResult)
         {
+            userTurnScore = 0; // Reset turn score at the start of each turn.
 
-            while (userTotalScore < 100)
+            // Process the result of the first dice roll passed from DiceGame.
+            ProcessRoll(diceResult);
+
+            // Ask the player if they want to roll again only if the score for this turn is greater than 0.
+            while (userTurnScore > 0 && userTotalScore < 100)
             {
-
-                int rollResult = _diceGame.getNumberRolled();
-                if (rollResult == 1)
+                Console.WriteLine("Do you want to roll again? (yes/no)");
+                if (!AskUserToRollAgain())
                 {
-                    userTurnScore = 0;
-                    int userCurrentTurn = userTurnTracker();
-                    Console.WriteLine($"you have rolled: {rollResult}, your current turn is: {userCurrentTurn},  your total for this round is {userTurnScore}");
-                    // should call bot method here 
-
-                }
-                else
-                {
-                    userTurnScore += rollResult;
-                    int userCurrentTurn = userTurnTracker();
-                    Console.WriteLine($"you have rolled: {rollResult} your current turn is: {userCurrentTurn} total is: {userTurnScore}, Do you want to roll again?");
-                    askUserToToRollAgain();
+                    break; // Exit the loop if the player doesn't want to roll again.
                 }
 
+                diceResult = _diceGame.GetNumberRolled(); // Get a new roll result.
+                ProcessRoll(diceResult);
             }
-        }
-        public void askUserToToRollAgain()
-        {
-            string userInputToRollAgain = Console.ReadLine().ToLower();
-            if (userInputToRollAgain == "yes")
-            {
-                userTotalScore += userTurnScore;
-                userTurnScore = 0;
-                Console.WriteLine($"Your total score is now: {userTotalScore}");
 
+            // Update the total score after the turn ends.
+            userTotalScore += userTurnScore;
+            Console.WriteLine($"End of turn. Your total score is now: {userTotalScore}");
+        }
+
+        private void ProcessRoll(int rollResult)
+        {
+            if (rollResult == 1)
+            {
+                userTurnScore = 0; // Reset turn score if 1 is rolled.
+                Console.WriteLine($"You rolled a 1. Your turn is over, and your score for this turn is {userTurnScore}");
             }
             else
             {
-                // PlayerDiceGame.botTurn();
-
-
+                userTurnScore += rollResult;
+                Console.WriteLine($"You rolled: {rollResult}. Your total score for this turn is: {userTurnScore}");
             }
         }
 
-
-
+        private bool AskUserToRollAgain()
+        {
+            string userInput = Console.ReadLine().ToLower();
+            return userInput == "yes";
+        }
     }
-
-
-
 }
