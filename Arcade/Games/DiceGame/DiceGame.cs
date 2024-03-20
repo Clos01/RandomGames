@@ -5,6 +5,7 @@ using System.Transactions;
 using App;
 using UserInterFaceNamespace;
 using PlayerNameSpace;
+using BotPlayerNameSpace;
 
 namespace pigDiceNameSpace
 {
@@ -17,6 +18,7 @@ namespace pigDiceNameSpace
         Random random = new Random();
         //! instances of classes 
         private readonly Player _player;
+        private readonly BotPlayer _botPlayer; 
         //* variable name from interface
         private string Username;
         //* Constructor //*
@@ -26,6 +28,7 @@ namespace pigDiceNameSpace
         {
             this.Username = name;
             _player = new Player(this);
+            _botPlayer = new BotPlayer(this);
         }
 
         public void WelcomePlayer()
@@ -83,6 +86,13 @@ namespace pigDiceNameSpace
                 }
 
                 Console.WriteLine("\nDice has been rolled. ");
+            }
+        }
+
+
+        public void botTakesTurn(){
+            if(){
+
             }
         }
     }

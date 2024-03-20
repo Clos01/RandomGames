@@ -20,7 +20,7 @@ namespace PlayerNameSpace
             return userTurn++;
         }
 
-        public void PlayerTurn(int diceResult)
+        public void PlayerTurn(int diceResult) // added parameter 
         {
             userTurnScore = 0; // Reset turn score at the start of each turn.
 
