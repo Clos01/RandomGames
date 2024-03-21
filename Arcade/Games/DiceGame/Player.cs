@@ -1,65 +1,57 @@
 
 using pigDiceNameSpace;
-
 namespace PlayerNameSpace
 {
     public class Player
     {
-        private int userTurn = 1;
-        private int userTotalScore;
-        private int userTurnScore;
-        private readonly DiceGame _diceGame;
+        public int userTurn = 1;
+        public int TotalScore;
+        protected int TurnScore;
+        protected readonly DiceGame _diceGame;
+        public string Username { get; set; }
 
-        public Player(DiceGame diceGame)
+        public Player(DiceGame diceGame, string username)
         {
             _diceGame = diceGame;
+            Username = username;
         }
 
-        public int UserTurnTracker()
+        public void TakeTurn(int diceResult)
         {
-            return userTurn++;
-        }
-
-        public void PlayerTurn(int diceResult) // added parameter 
-        {
-            userTurnScore = 0; // Reset turn score at the start of each turn.
-
-            // Process the result of the first dice roll passed from DiceGame.
+            TurnScore = 0;
             ProcessRoll(diceResult);
 
-            // Ask the player if they want to roll again only if the score for this turn is greater than 0.
-            while (userTurnScore > 0 && userTotalScore < 100)
+            while (TurnScore > 0 && TotalScore < 100)
             {
-                Console.WriteLine("Do you want to roll again? (yes/no)");
+                Console.WriteLine($"{Username}, do you want to roll again? (yes/no)");
                 if (!AskUserToRollAgain())
                 {
-                    break; // Exit the loop if the player doesn't want to roll again.
+                    break;
                 }
 
-                diceResult = _diceGame.GetNumberRolled(); // Get a new roll result.
+                diceResult = _diceGame.GetNumberRolled();
                 ProcessRoll(diceResult);
             }
 
-            // Update the total score after the turn ends.
-            userTotalScore += userTurnScore;
-            Console.WriteLine($"End of turn. Your total score is now: {userTotalScore}");
+            TotalScore += TurnScore;
+            Console.WriteLine($"End of {Username}'s turn. {Username}'s total score is now: {TotalScore}.");
         }
 
-        private void ProcessRoll(int rollResult)
+        public virtual void ProcessRoll(int rollResult)
         {
             if (rollResult == 1)
             {
-                userTurnScore = 0; // Reset turn score if 1 is rolled.
-                Console.WriteLine($"You rolled a 1. Your turn is over, and your score for this turn is {userTurnScore}");
+                TurnScore = 0;
+                Console.WriteLine($"{Username} rolled a 1. {Username}'s turn is over, and the score for this turn is 0.");
             }
             else
             {
-                userTurnScore += rollResult;
-                Console.WriteLine($"You rolled: {rollResult}. Your total score for this turn is: {userTurnScore}");
+                TurnScore += rollResult;
+                Console.WriteLine($"{Username} rolled: {rollResult}. {Username}'s total score for this turn is: {TurnScore}.");
             }
         }
 
-        private bool AskUserToRollAgain()
+        public bool AskUserToRollAgain()
         {
             string userInput = Console.ReadLine().ToLower();
             return userInput == "yes";

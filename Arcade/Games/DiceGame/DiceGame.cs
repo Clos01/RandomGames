@@ -24,31 +24,38 @@ namespace pigDiceNameSpace
         //* Constructor //*
 
 
-        public DiceGame(string name)
-        {
-            this.Username = name;
-            _player = new Player(this);
-            _botPlayer = new BotPlayer(this);
-        }
+       public DiceGame(string name)
+{
+    Username = name;
+    _player = new Player(this, name);
+    _botPlayer = new BotPlayer(this);
+}
 
         public void WelcomePlayer()
         {
             Console.WriteLine($"Welcome {Username}, to Pig Dice Game ");
         }
         public void startGame()
+    {
+        WelcomePlayer();
+        while (_player.TotalScore < 100 && _botPlayer.TotalScore < 100)
         {
-            Console.WriteLine("Press Number `1` to roll the dice.");
-            var input = Console.ReadLine();
-            if (int.TryParse(input, out int selectedNumber) && selectedNumber == 1)
+            Console.WriteLine($"{Username}'s Turn:");
+            userRollDice();
+            if (_player.TotalScore >= 100)
             {
-                RollDice();
+                Console.WriteLine($"{Username} wins!");
+                break;
             }
-            else
+ Console.WriteLine("Bot's Turn:");
+            BotTakesTurn();
+            if (_botPlayer.TotalScore >= 100)
             {
-                Console.WriteLine("Invalid input. Exiting the game.");
-                // Handle invalid input or exit the game
+                Console.WriteLine("Bot wins!");
+                break;
             }
         }
+    }
 
         //Rolling dice
         public int GetNumberRolled()
@@ -57,19 +64,28 @@ namespace pigDiceNameSpace
         }
 
         //* General information for roll dice  //*
-        public void RollOfDice()
+    
+        
+        public int RollDice()
         {
-            Console.WriteLine("Lets Roll the Dice. You will Roll First,  Press Number `1` to roll");
-            RollDice();
-
-        }
-        public void RollDice()
-        {
-            WaitTime(); // Simulate dice rolling
+            WaitTime();
             int diceResult = GetNumberRolled();
             Console.WriteLine($"\nDice has been rolled: {diceResult}");
-            _player.PlayerTurn(diceResult); // Pass the dice result to the player
+            return diceResult;
         }
+public void BotTakesTurn()
+{
+    int diceResult = RollDice();
+    _botPlayer.ProcessRoll(diceResult);
+}
+
+
+
+  public void userRollDice()
+{
+    int diceResult = RollDice(); // Roll dice and get the result
+    _player.TakeTurn(diceResult); // Pass the result to the player's turn
+}
 
         public void WaitTime()
         {
@@ -85,16 +101,11 @@ namespace pigDiceNameSpace
                     Thread.Sleep(300); // Sleep for 1 second
                 }
 
-                Console.WriteLine("\nDice has been rolled. ");
-            }
+          }
         }
 
 
-        public void botTakesTurn(){
-            if(){
-
-            }
-        }
+       
     }
 }
 

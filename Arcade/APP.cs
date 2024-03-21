@@ -24,7 +24,6 @@ namespace App
             Entrance entranceToBeLetIn = new(name);
             entranceToBeLetIn.checkingForLegalAgeForEntrance();
             IUserInterface diceGame = new DiceGame(name);
-            diceGame.WelcomePlayer();
             diceGame.startGame();
             
 
